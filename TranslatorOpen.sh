@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# script opens new terimanl window with opened trans instance 
-# and translation for primary clipboard content 
+# script opens new terminal window with opened trans instance
+# and translation for primary clipboard content
 
 usage() {
     echo -e "translate last selected text
-            for specifie target language put first argument it's code
+            for specify target language put first argument it's code
             for example:
                 TranslatorOpen.sh ru"
 }
@@ -20,11 +20,11 @@ fi
 Message=$(xclip -sel pri -o)
 
 if [[ $DEF_TARGET ]] ; then
-    Cmd="trans -t $DEF_TARGET"
+    Cmd="trans --no-ansi -t $DEF_TARGET"
 else
-    Cmd="trans"
+    Cmd="trans --no-ansi"
 fi
 
-echo $Cmd
-
-$TERMINAL --name=translator --detach --hold $Cmd "$Message"
+var=$(eval "$Cmd" "\"$Message\"")
+echo -e $var
+notify-send --urgency=normal "$var"
