@@ -1,4 +1,4 @@
-# /bin/bash
+#!/bin/bash
 #парсинг командной строки
 if [[ $1 == "enabled" ]]; then
    enabled="enabled"
