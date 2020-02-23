@@ -1,0 +1,11 @@
+#!/bin/bash
+
+mkdir -p /tmp/screenshot
+
+file="/tmp/screenshot/screenshot.png"
+
+maim -g $(slop) $file
+
+xclip -i $file -selection clipboard -target $(file -b --mime-type $file)
+
+notify-send "screenshot saved to clipboard and file: [$file]"
