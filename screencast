@@ -1,0 +1,11 @@
+#!/bin/bash
+
+mkdir -p /tmp/screencast
+
+file="/tmp/screencast/screencast.mp4"
+
+ffmpeg -f x11grab $(slop -f "-video_size %wx%h -framerate 25 -i :0.0+%x,%y") $file
+
+xclip -i $file -selection clipboard -target $(file -b --mime-type $file)
+
+notify-send "screencast saved to clipboard and file: [$file]"
