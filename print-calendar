@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# get current date
+_date=$(date +%d)
+
+#get calendar string
+_cal=$(cal -m)
+
+# mark current date
+replacement="s/$_date/<span background=\"#50739c\"><b>&<\/b><\/span>/"
+echo $replacement
+res=$(echo -e "$_cal" | sed -e "$replacement")
+
+notify-send ' ' "$res"
