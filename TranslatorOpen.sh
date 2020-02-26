@@ -26,5 +26,12 @@ else
 fi
 
 var=$(eval "$Cmd" "\"$Message\"")
+
 echo -e $var
-notify-send --urgency=normal "$var"
+
+replacement="s/$Message/<span background=\"#506f6f\"><b>&<\/b><\/span>/"
+var=$(echo -e "$var" | sed -e "$replacement")
+
+echo -e $var
+
+notify-send "Translator" "$var"
