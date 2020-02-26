@@ -6,6 +6,6 @@ file="/tmp/screenshot/screenshot.png"
 
 maim -g $(slop) $file
 
-xclip -i $file -selection clipboard -target $(file -b --mime-type $file)
+echo "file://$file" | xclip -i -selection clipboard -target "text/uri-list"
 
 notify-send "screenshot saved to clipboard and file: [$file]"
