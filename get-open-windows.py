@@ -40,7 +40,7 @@ def get_window(id):
 def print_to_polybar(windows, workspaces, curr_ws, change_ws_command, font_num):
 	_str = ""
 	# common template
-	_template = "%{A:" + change_ws_command + ":} %{F#a5b5b5}$2:%{F-} $3 %{A}"
+	_template = "%{A1:" + change_ws_command + ":}%{F#a5b5b5} $2 %{F-}$3%{A}"
 	# template for current ws
 	_template_curr = "%{T" + str(font_num) + "}" + _template + "%{T-}"
 	# selected template
@@ -62,7 +62,7 @@ def print_to_polybar(windows, workspaces, curr_ws, change_ws_command, font_num):
 			_names = " "
 		_str = _str + _template_sell.replace("$1", str(ws_num)).replace(
 			"$2", workspaces[ws_num]).replace("$3",_names )
-
+	# print(workspaces)
 	print(_str)
 
 	return 0
@@ -80,8 +80,9 @@ def usage():
 
 if __name__ == "__main__":
 
-	if sys.argv[1] == "-h" or sys.argv[1] == "--help":
-		usage()
+	if len(sys.argv) > 1:
+		if sys.argv[1] == "-h" or sys.argv[1] == "--help":
+			usage()
 
 	_size, _ids, _wss, _cws = get_window_ids()
 
