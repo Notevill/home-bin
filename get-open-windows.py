@@ -14,15 +14,13 @@ import sys
 # get windows list and list of workspaces
 def get_window_ids():
 	_out = sb.run(["xprop", "-root", "_NET_CLIENT_LIST", "_NET_DESKTOP_NAMES", "_NET_CURRENT_DESKTOP"], capture_output=True)
-	if not _out.stderr :
-		_ids, _ws, _cws = _out.stdout.decode('utf8').strip().split('\n')
-		_ids = _ids[_ids.find("#")+2:].split(', ')
-		_ws = _ws[_ws.find("=")+2:].replace('"','').split(', ')
-		_cws = int(_cws[_cws.find("=")+2:].strip())
-		return len(_ids), _ids, _ws, _cws
-	else:
-		print(_out.stderr, file=sys.stderr)
-	return 0, [], []
+	_ids, _ws, _cws = _out.stdout.decode('utf8').strip().split('\n')
+	_ids = _ids[_ids.find("#")+2:].split(', ')
+	_ws = _ws[_ws.find("=")+2:].replace('"','').split(', ')
+	_cws = int(_cws[_cws.find("=")+2:].strip())
+	if _ids[0].find("0x") < 0:
+		_ids = []
+	return _ids, _ws, _cws
 
 # get window parameters
 def get_window(id):
@@ -59,10 +57,9 @@ def print_to_polybar(windows, workspaces, curr_ws, change_ws_command, font_num):
 				_names = _names + _name + ", "
 			_names = _names[:-2] + "]"
 		else:
-			_names = " "
+			_names = ""
 		_str = _str + _template_sell.replace("$1", str(ws_num)).replace(
 			"$2", workspaces[ws_num]).replace("$3",_names )
-	# print(workspaces)
 	print(_str)
 
 	return 0
@@ -84,9 +81,9 @@ if __name__ == "__main__":
 		if sys.argv[1] == "-h" or sys.argv[1] == "--help":
 			usage()
 
-	_size, _ids, _wss, _cws = get_window_ids()
+	_ids, _wss, _cws = get_window_ids()
 
-	if _size > 0:
+	if len(_wss) > 0:
 		windows = {}
 		for _id in _ids:
 			_ws, _nm = get_window(_id)
