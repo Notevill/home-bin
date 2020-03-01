@@ -8,4 +8,4 @@ maim -g $(slop) $file
 
 echo "file://$file" | xclip -i -selection clipboard -target "text/uri-list"
 
-notify-send "screenshot saved to clipboard and file: [$file]"
+notify-send " take screenshot" "screenshot saved to clipboard and file: [$file]"

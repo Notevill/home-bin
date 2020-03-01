@@ -8,4 +8,4 @@ yes | ffmpeg -f x11grab $(slop -f "-video_size %wx%h -framerate 25 -i :0.0+%x,%y
 
 echo "file://$file" | xclip -i -selection clipboard -target "text/uri-list"
 
-notify-send "screencast saved to clipboard and file: [$file]"
+notify-send " take screencast"  "screencast saved to clipboard and file: [$file]"
