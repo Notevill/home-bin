@@ -4,7 +4,7 @@ mkdir -p /tmp/screencast
 
 file="/tmp/screencast/screencast.mp4"
 
-yes | ffmpeg -f x11grab $(slop -f "-video_size %wx%h -framerate 25 -i :0.0+%x,%y") $file
+yes | ffmpeg -f x11grab $(slop -f "-video_size %wx%h -framerate 25 -i $DISPLAY.0+%x,%y") $file
 
 echo "file://$file" | xclip -i -selection clipboard -target "text/uri-list"
 
